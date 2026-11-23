@@ -49,4 +49,22 @@ public class Semana implements Calculador{
         return suma;
 
     }
+
+    public int calcularCaloriasMes(int mes){
+        if(mes < 1 || mes > 12){
+            throw new IllegalArgumentException("El mes no puede ser menor a 1 o mayor a 12");
+        }
+        if(mes != fechaInicial.getMonthValue() && mes != fechaInicial.plusDays(6).getMonthValue()){
+            throw new IllegalArgumentException("esta semana no corresponde al mes dado");
+        }
+        int suma = 0;
+        for(Dia dia: dias){
+            if(dia != null){
+                if(dia.getFecha().getMonthValue() == mes){
+                    suma += dia.calcularCaloriasTotales();
+                }
+            }    
+        }
+        return suma;
+    }
 }
