@@ -89,4 +89,32 @@ public class Buscador {
         }
         return resultado;
     }
+
+    public enum AscendenteDescendente{
+        ASCENDENTE, DESCENDENTE
+    }
+
+    public List<Comida> ordenarorCriterio(List<Comida> colComidas, AscendenteDescendente tipo, CriterioBusqueda criterio){
+        if(colComidas == null){
+            throw new IllegalArgumentException("No se permiten listas nulas");
+        }
+        if(tipo == null){
+            throw new IllegalArgumentException("No se permite tipo nulo");
+        }
+        if(criterio == null){
+            throw new IllegalArgumentException("No se permiten criterios nulos");
+        }
+        List<Comida> ordenada = new ArrayList<>(colComidas);
+        switch (tipo) {
+            case ASCENDENTE:
+                ordenada.sort((a,b) -> Float.compare(devolverValorCriterio(a, criterio), devolverValorCriterio(b, criterio)));
+                return ordenada;
+        
+            case DESCENDENTE:
+                ordenada.sort((a,b)->Float.compare(devolverValorCriterio(b, criterio), devolverValorCriterio(a, criterio)));
+                return ordenada;    
+            default:
+                throw new IllegalArgumentException("No existe ese tipo de ordenamiento");
+        }
+    }
 }
