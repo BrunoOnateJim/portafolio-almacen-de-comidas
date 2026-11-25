@@ -1,8 +1,11 @@
 package io.github.brunoonatejim.modelo;
+import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ColeccionMeses {
     private final Map<YearMonth, Mes> colMeses;
@@ -36,5 +39,23 @@ public class ColeccionMeses {
         Mes mes = colMeses.get(clave);
         return mes;
     }
+    private Map<LocalDate, Semana> obtenerSemanasUnicas(){
+        Map<LocalDate, Semana> semUnicas = new TreeMap<>();
+        for(Mes mes: colMeses.values()){
+            for(Semana semana: mes.getSemanas()){
+                LocalDate fecha = semana.getFechaInicial();
+                semUnicas.put(fecha, semana);
+            }
+        }
+        return semUnicas;
+    }
 
+    public List<Comida> obtenerColComidas(){
+        Map<LocalDate, Semana> semUnicas = obtenerSemanasUnicas();
+        List<Comida> colComidas = new ArrayList<>();
+        for(Semana semana: semUnicas.values()){
+            colComidas.addAll(semana.obtenerComidasSemanales());
+        }
+        return colComidas;
+    }
 }
