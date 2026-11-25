@@ -7,10 +7,61 @@ public class Buscador {
     private static final String MARCADOR_ENIE = "__ENIE_TEMPORAL";
 
     public enum CriterioBusqueda{
-        PROTEINAS,
-        CARBOHIDRATOS,
-        CALORIAS,
-        GRASAS
+        PROTEINAS(20),
+        CARBOHIDRATOS(20),
+        CALORIAS(300),
+        GRASAS(20);
+
+        private final int margen;
+        CriterioBusqueda(int margen){
+            this.margen = margen;
+        }
+        public int getMargen(){
+            return margen;
+        }
+    }
+
+    private float devolverValorCriterio(Comida comida, CriterioBusqueda criterio){
+        if(criterio == null){
+            throw new IllegalArgumentException("El criterio no puede ser null");
+        }
+        switch (criterio) {
+            case PROTEINAS:
+                return comida.getProteinas();
+            
+            case CARBOHIDRATOS:
+                return comida.getCarbohidratos();
+
+            case CALORIAS:
+                return comida.getCalorias();
+
+            case GRASAS:
+                return comida.getGrasas();
+        
+            default:
+                throw new IllegalArgumentException("Criterio no encontrado");
+        }
+    }
+
+    public List<Comida> buscarPorValor(List<Comida> colComidas, float valor, CriterioBusqueda criterio){
+        if(valor < 0){
+            throw new IllegalArgumentException("El valor no puede ser negativo");
+        }
+        if(colComidas == null){
+            throw new IllegalArgumentException("No puede ser una lista nula");
+        }
+        if(criterio == null){
+            throw new IllegalArgumentException("No puede haber un criterio nulo");
+        }
+        List<Comida> cumplenCriterio = new ArrayList<>();
+        int margen = criterio.getMargen();
+        for(Comida comida: colComidas){
+            float valCrit = devolverValorCriterio(comida, criterio);
+            if(valCrit >= (valor - margen) && valCrit <= (valor + margen)){
+                cumplenCriterio.add(comida); 
+            }
+        }
+        return cumplenCriterio;
     }
 
     private static String normalizarConservandoEnie(String text){
