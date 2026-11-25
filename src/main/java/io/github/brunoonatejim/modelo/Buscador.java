@@ -61,6 +61,8 @@ public class Buscador {
                 cumplenCriterio.add(comida); 
             }
         }
+        
+        cumplenCriterio.sort((a,b)->Float.compare(Math.abs(devolverValorCriterio(a, criterio) - valor), Math.abs(devolverValorCriterio(b, criterio)-valor)));
         return cumplenCriterio;
     }
 
@@ -94,7 +96,7 @@ public class Buscador {
         ASCENDENTE, DESCENDENTE
     }
 
-    public List<Comida> ordenarorCriterio(List<Comida> colComidas, AscendenteDescendente tipo, CriterioBusqueda criterio){
+    public List<Comida> ordenarPorCriterio(List<Comida> colComidas, AscendenteDescendente tipo, CriterioBusqueda criterio){
         if(colComidas == null){
             throw new IllegalArgumentException("No se permiten listas nulas");
         }
