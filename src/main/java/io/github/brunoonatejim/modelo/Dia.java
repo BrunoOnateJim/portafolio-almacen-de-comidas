@@ -39,4 +39,16 @@ public class Dia implements Calculador{
         }
         return suma;
     }
+
+    @Override 
+    public float contarMacros(CriterioSuma tipo){
+        if(tipo == null){
+            throw new IllegalArgumentException("No se permite tipo de criterio nulo");
+        }
+        float suma = 0;
+        for(Comida comida: comidas){
+            suma += comida.contarMacros(tipo);
+        }
+        return suma;
+    }
 }

@@ -53,4 +53,24 @@ public class Comida implements Calculador{
     public int calcularCaloriasTotales(){
         return calorias;
     }    
+
+    @Override 
+    public float contarMacros(CriterioSuma tipo){
+        if(tipo == null){
+            throw new IllegalArgumentException("No se permite tipo de criterio nulo");
+        }
+        switch (tipo) {
+            case PROTEINAS:
+                return proteinas;
+            
+            case CARBOHIDRATOS:
+                return carbohidratos;
+                
+            case GRASAS:
+                return grasas;
+
+            default:
+                throw new IllegalArgumentException("Tipo invalido de criterio");
+        }
+    }
 }

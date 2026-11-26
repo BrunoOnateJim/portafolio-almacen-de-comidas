@@ -51,5 +51,17 @@ public class Mes implements Calculador{
         }
         return suma;
     }
+
+    @Override 
+    public float contarMacros(CriterioSuma tipo){
+        if(tipo == null){
+            throw new IllegalArgumentException("No se permite tipo de criterio nulo");
+        }
+        float suma = 0;
+        for(Semana semana: semanas){
+            suma += semana.contarMacrosMes(tipo, fechaInicialMes.getMonthValue());
+        }
+        return suma;
+    }
     
 }

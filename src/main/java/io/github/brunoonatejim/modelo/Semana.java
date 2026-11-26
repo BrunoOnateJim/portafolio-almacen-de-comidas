@@ -53,13 +53,17 @@ public class Semana implements Calculador{
 
     }
 
-    public int calcularCaloriasMes(int mes){
-        if(mes < 1 || mes > 12){
+    private void validarMesDeLaSemana(int mes){
+         if(mes < 1 || mes > 12){
             throw new IllegalArgumentException("El mes no puede ser menor a 1 o mayor a 12");
         }
         if(mes != fechaInicial.getMonthValue() && mes != fechaInicial.plusDays(6).getMonthValue()){
             throw new IllegalArgumentException("esta semana no corresponde al mes dado");
         }
+    }
+
+    public int calcularCaloriasMes(int mes){
+        validarMesDeLaSemana(mes);
         int suma = 0;
         for(Dia dia: dias){
             if(dia != null){
@@ -79,5 +83,36 @@ public class Semana implements Calculador{
             }
         }
         return comSem;
+    }
+    
+    @Override 
+    public float contarMacros(CriterioSuma tipo){
+        if(tipo == null){
+            throw new IllegalArgumentException("No se permite tipo de criterio nulo");
+        }
+
+        float suma = 0;
+        for(Dia dia: dias){
+            if(dia != null){
+                suma += dia.contarMacros(tipo);
+            }
+        }
+        return suma;
+    }
+
+    public float contarMacrosMes(CriterioSuma tipo, int mes){
+        validarMesDeLaSemana(mes);
+        if(tipo == null){
+            throw new IllegalArgumentException("No se acpeta tipo de criterio nulo");
+        }
+        float suma = 0;
+        for(Dia dia: dias){
+            if(dia != null){
+                if(dia.getFecha().getMonthValue() == mes){
+                    suma += dia.contarMacros(tipo);
+                }
+            }
+        }
+        return suma;
     }
 }
