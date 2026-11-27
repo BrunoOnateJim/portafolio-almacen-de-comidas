@@ -58,4 +58,13 @@ public class ColeccionMeses {
         }
         return colComidas;
     }
+
+    public List<Dia> obtenerColDias(){
+        Map<LocalDate, Semana> semUnicas = obtenerSemanasUnicas();
+        List<Dia> colDias = new ArrayList<>();
+        for(Semana semana: semUnicas.values()){
+            colDias.addAll(semana.obtenerDiasSemanales());
+        }
+        return colDias;
+    }
 }

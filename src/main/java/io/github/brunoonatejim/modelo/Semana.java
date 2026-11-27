@@ -84,6 +84,16 @@ public class Semana implements Calculador{
         }
         return comSem;
     }
+
+    public List<Dia> obtenerDiasSemanales(){
+        List<Dia> diasSem = new ArrayList<>();
+        for(Dia dia: dias){
+            if(dia != null){
+                diasSem.add(dia);
+            }
+        }
+        return diasSem;
+    }
     
     @Override 
     public float contarMacros(CriterioSuma tipo){
@@ -103,7 +113,7 @@ public class Semana implements Calculador{
     public float contarMacrosMes(CriterioSuma tipo, int mes){
         validarMesDeLaSemana(mes);
         if(tipo == null){
-            throw new IllegalArgumentException("No se acpeta tipo de criterio nulo");
+            throw new IllegalArgumentException("No se acepeta tipo de criterio nulo");
         }
         float suma = 0;
         for(Dia dia: dias){
